@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0">
+    <title>upload-service demo</title>
+    <script src="https://cdn.staticfile.org/Plupload/2.1.1/plupload.full.min.js"></script>
+    <script src="https://cdn.staticfile.org/qiniu-js-sdk/1.0.14-beta/qiniu.min.js"></script>
+</head>
+<body>
+<div>
+  <button id="uploadButton">Upload</button>
+  <img id="image">
+</div>
+
+<script>
+initUploader()
+
+function showImage (url) {
+  var image = document.getElementById('image')
+  image.src = url
+}
+
+function initUploader () {
+  return new QiniuJsSDK().uploader({
+    runtimes: 'html5, flash, html4',
+    browse_button: 'uploadButton',
+    uptoken_url: '/api/upload/token',
+    get_new_uptoken: false,
+    multi_selection: false,
+    domain: 'http://qiniu.jackyang.me/',
+    max_file_size: '20mb',
+    max_retries: 3,
+    dragDrop: false,
+    chunk_size: '4mb',
+    auto_start: true,
+    init: {
+      BeforeUpload: function () {
+        console.log('before upload')
+      },
+      UploadProgress: function (up, file) {
+        console.log('upload progress', file.percent, file.speed)
+      },
+      FileUploaded: function (up, file, info) {
+        let domain = up.getOption('domain')
+        let res = JSON.parse(info)
+        let url = domain + res.key
+        console.log('uploaded', url)
+        showImage(url)
+      },
+      Error: function (up, err, errTip) {
+        console.log('upload error', err)
+      },
+      UploadComplete: function() {
+        console.log('upload completed')
+      },
+      Key: function (up, file) {
+        let type = file.type.split('/')[0]
+        let ext = file.type.split('/')[1]
+        let key = `post/${type}/${file.id}.${ext}`;
+        return key
+      }
+    }
+  })
+}
+</script>
+</body>
+</html>
