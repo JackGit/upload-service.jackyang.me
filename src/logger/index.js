@@ -5,8 +5,8 @@ const MAX_LOG_SIZE = 1024 * 1024 * 10
 const BACKUPS = 10
 const LOG_FILE_DIRETORY = process.env.LOG_FILE_DIRETORY || '.'
 const LOG_LEVEL = process.env.LOG_LEVEL || 'ALL'
-const DEFAULT_LOG_FILE_NAME = 'USER_SERVICE_LOG.log'
-const ERROR_LOG_FILE_NAME = 'USER_SERVICE_ERROR_LOG.log'
+const DEFAULT_LOG_FILE_NAME = 'SERVICE.log'
+const ERROR_LOG_FILE_NAME = 'SERVICE_ERROR.log'
 
 function resolve (filename) {
   return path.resolve(LOG_FILE_DIRETORY, filename)
