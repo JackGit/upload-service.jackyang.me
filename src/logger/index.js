@@ -1,7 +1,7 @@
 const log4js = require('log4js')
 const path = require('path')
 const isDev = process.env.NODE_ENV !== 'production'
-const MAX_LOG_SIZE = 20480
+const MAX_LOG_SIZE = 1024 * 1024 * 10
 const BACKUPS = 10
 const LOG_FILE_DIRETORY = process.env.LOG_FILE_DIRETORY || '.'
 const LOG_LEVEL = process.env.LOG_LEVEL || 'ALL'
