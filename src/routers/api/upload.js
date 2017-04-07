@@ -11,6 +11,6 @@ const uploadRouter = require('koa-router')()
 const uploadService = require('../../services/upload')
 
 uploadRouter.get('/', uploadService.upload)
-uploadRouter.get('/token', uploadService.generateUptoken)
+uploadRouter.get('/token/:bucket', uploadService.generateUptoken)
 
 module.exports = uploadRouter
