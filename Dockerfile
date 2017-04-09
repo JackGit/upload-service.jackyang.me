@@ -12,7 +12,7 @@ ENV HTTP_PORT=8080
 ENV NODE_ENV=production
 
 ENV LOG_LEVEL=ALL
-ENV LOG_FILE_DIRETORY=/var/log/jackyang.me/upload-service
+ENV LOG_FILE_DIRETORY=/var/log/jackyang.me/qiniu-service
 ENV ACCESS_KEY=8RflFd93xHYRl6hFMJJ-dMeMaBiJtwfqj6lUt9qy
 ENV SECRET_KEY=dCd4aLlp4o6SfOuRbuydGiZyin85KLM8-lzvXIge
 
