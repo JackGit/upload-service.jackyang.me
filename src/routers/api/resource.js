@@ -12,5 +12,6 @@ const resourceService = require('../../services/resource')
 
 resourceRouter.get('/:bucket/:key', resourceService.stat)
 resourceRouter.delete('/:bucket/:key', resourceService.delete)
+resourceRouter.post('/batchDelete', resourceService.batchDelete)
 
 module.exports = resourceRouter
