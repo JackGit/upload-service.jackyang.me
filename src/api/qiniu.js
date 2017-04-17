@@ -2,10 +2,11 @@
 
 const qiniu = require('qiniu')
 
-qiniu.conf.ACCESS_KEY = process.env.ACCESS_KEY || '8RflFd93xHYRl6hFMJJ-dMeMaBiJtwfqj6lUt9qy'
-qiniu.conf.SECRET_KEY = process.env.SECRET_KEY || 'dCd4aLlp4o6SfOuRbuydGiZyin85KLM8-lzvXIge'
+qiniu.conf.ACCESS_KEY = process.env.ACCESS_KEY
+qiniu.conf.SECRET_KEY = process.env.SECRET_KEY
 
 const client = new qiniu.rs.Client()
+const EntryPath = qiniu.rs.EntryPath
 
 exports.stat = function (bucket, key) {
   return new Promise(function (resolve, reject) {
@@ -23,6 +24,18 @@ exports.stat = function (bucket, key) {
 exports.delete = function (bucket, key) {
   return new Promise(function (resolve, reject) {
     client.remove(bucket, key, function (err, ret) {
+      if (!err) {
+        resolve(ret)
+      } else {
+        reject(err)
+      }
+    })
+  })
+}
+
+exports.batchDelete = function (entries) {
+  return new Promise(function (resolve, reject) {
+    client.batchDelete(entries.map(e => new EntryPath(e.bucket, e.key)), function (err, ret) {
       if (!err) {
         resolve(ret)
       } else {
