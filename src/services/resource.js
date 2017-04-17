@@ -35,3 +35,20 @@ exports.delete = function *() {
     this.body = e
   }
 }
+
+exports.batchDelete = function *() {
+  let entries = this.request.body
+
+  try {
+    let ret = yield qiniuAPI.batchDelete(entries.map(e => {
+      return {
+        bucket: decodeURIComponent(e.bucket),
+        key: decodeURIComponent(e.key)
+      }
+    }))
+    this.body = { code: 0 }
+  } catch (e) {
+    this.status = convertQiniuErrorCode(e.code)
+    this.body = e
+  }
+}
